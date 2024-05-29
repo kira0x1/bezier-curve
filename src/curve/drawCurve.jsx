@@ -13,7 +13,7 @@ const DrawCurve = () => {
 	return (
 		<>
 			<div class={styles.pointContainer}>
-				<svg width='800' height='600'>
+				<svg viewBox='0 0 600 200' width='800' height='600'>
 					{RenderControlPoint(controlPoint1, "1")}
 					{RenderControlPoint(controlPoint2, "2")}
 					{RenderCurve(curvePoints)}
@@ -36,8 +36,9 @@ const RenderControlPoint = (controlPoint, title) => {
 				ry='10'
 				style='fill:rgb(255,255,255,0.3);stroke:white;stroke-width:3;opacity:0.6'
 			/>
-			<div class={styles.pointIndex}>{title}</div>
-			<div class={styles.point}>{`( ${x}, ${y} )`}</div>
+			<text x={x + 60} y={y - 45} stroke='white'>
+				{title}
+			</text>
 		</>
 	);
 };
