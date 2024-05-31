@@ -1,0 +1,30 @@
+.pointContainer {
+  display: block;
+  width: 400px;
+  margin: auto;
+  margin-top: 0px;
+}
+
+.pointsMap {
+  display: block;
+  width: 100%;
+  margin-top: 100px;
+  align-items: center;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  height: 55vh;
+  gap: 10px;
+}
+
+.controlPoint {
+  stroke: rgb(255, 255, 255);
+  stroke-width: 0.15rem;
+  /* opacity: 0.8; */
+  fill: rgb(56, 56, 56);
+}
+
+.controlPoint:hover {
+  fill: rgb(69, 97, 153);
+}
