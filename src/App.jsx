@@ -1,5 +1,5 @@
 import styles from "./styles/App.module.css";
-import DrawCurve from "./curve/BezierCurve";
+import DrawCurve from "./Components/BezierCurve";
 
 function App() {
   return (

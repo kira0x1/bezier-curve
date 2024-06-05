@@ -1,8 +1,20 @@
 .pointContainer {
-  display: block;
-  width: 400px;
-  margin: auto;
-  margin-top: 0px;
+  position: absolute;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  /* width: 50%; */
+  /* height: 50vh; */
+  /* margin: auto; */
+  /* flex-shrink: 1; */
+  /* flex-grow: 0; */
+  justify-content: center;
+  /* align-items: center; */
+  /* background-color: #c04a4a; */
+  /* margin-top: 20px; */
+  padding: 50px;
 }
 
 .pointsMap {
@@ -18,13 +30,25 @@
   gap: 10px;
 }
 
+.curveViewBox {
+  fill: #fff;
+  /* background-color: #444; */
+  background-color: #1b1e24;
+
+  /* margin: auto; */
+  /* padding: 10px; */
+  /* display: flex; */
+  width: 500px;
+  height: 500px;
+}
+
 .controlPoint {
   stroke: rgb(255, 255, 255);
-  stroke-width: 0.15rem;
+  stroke-width: 2.5;
   /* opacity: 0.8; */
   fill: rgb(56, 56, 56);
 }
 
 .controlPoint:hover {
-  fill: rgb(69, 97, 153);
+  fill: rgb(108, 136, 190);
 }
