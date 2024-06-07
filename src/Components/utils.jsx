@@ -21,8 +21,35 @@ function bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, numPoin
   return points;
 }
 
+const renderCurve = (curvePoints) => {
+  const lines = [];
+
+  for (let i = 0; i < curvePoints.length - 1; i++) {
+    const point1 = curvePoints[i];
+    const point2 = curvePoints[i + 1];
+
+    lines.push(
+      <>
+        <line x1={point1.x} y1={point1.y} x2={point2.x} y2={point2.y} stroke="#Cf509F" stroke-width="2px" />
+        {i > 0 && <circle key={i} cx={point1.x} cy={point1.y} r="2" fill="white" />}
+      </>,
+    );
+  }
+
+  lines.push(createPoint(curvePoints[0]));
+  lines.push(createPoint(curvePoints[curvePoints.length - 1]));
+
+  return lines;
+};
+
+const createPoint = (point) => {
+  return <circle cx={point.x} cy={point.y} r="3" fill="white" />;
+};
+
 const Utils = {
-  bezierCurve: bezierCurve,
+  bezierCurve,
+  renderCurve,
+  createPoint,
 };
 
 export default Utils;

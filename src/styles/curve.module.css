@@ -13,27 +13,9 @@
   padding-top: 50px;
 }
 
-.pointsMap {
-  display: block;
-  width: 100%;
-  margin-top: 100px;
-  align-items: center;
-  flex-direction: column;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
-  height: 55vh;
-  gap: 10px;
-}
-
 .curveViewBox {
   fill: #fff;
-  /* background-color: #444; */
   background-color: #1b1e24;
-
-  /* margin: auto; */
-  /* padding: 10px; */
-  /* display: flex; */
   width: 500px;
   height: 500px;
 }
@@ -53,4 +35,10 @@
 .dragContainer {
   width: 100%;
   height: 100%;
+}
+
+.slider {
+  width: 100%;
+  margin-bottom: 10px;
+  display: block;
 }

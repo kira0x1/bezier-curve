@@ -18,7 +18,11 @@ export default class ControlPoint {
     // ControlPoint.count++;
   }
 
-  move(x = 0, y = 0) {
+  moveTo(x = 0, y = 0) {
+    this.setPosition({ x: x, y: y });
+  }
+
+  translate(x = 0, y = 0) {
     if (x == 0 && y == 0) {
       console.log("not gonna move cus zero zero");
       return;
@@ -49,17 +53,15 @@ export default class ControlPoint {
           ry="10"
         />
 
-        {/* <Show when={isSelected(this.id)}>
-          <text
-            x={this.position().x - 12}
-            y={this.position().y - 5}
-            font-size="10px"
-            font-weight="500"
-            style={{ "user-select": "none" }}
-          >
-            {this.id}
-          </text>
-        </Show> */}
+        {/* <text
+          x={this.position().x - 12}
+          y={this.position().y - 5}
+          font-size="10px"
+          font-weight="500"
+          style={{ "user-select": "none" }}
+        >
+          {this.id}
+        </text> */}
       </svg>
     );
   }
