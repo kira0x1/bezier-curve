@@ -14,15 +14,19 @@ const DrawCurve = () => {
   const controlPoint2 = new ControlPoint(1, 150, 190, "2");
   const endPoint = { x: 220, y: 200 };
 
-  const [resolution, setResolution] = createSignal(10);
+  const getCurvePoints = (res) => utils.bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, res);
 
-  const getCurvePoints = () => utils.bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, resolution());
+  const [lineStore, setLineStore] = createStore({ curvePoints: [], resolution: 10 });
+  setLineStore({ curvePoints: getCurvePoints(10) });
 
   const cpoints = [controlPoint1, controlPoint2];
 
   createEffect((prev) => {
-    if (resolution() !== prev) setLineStore({ curvePoints: getCurvePoints() });
-  }, 10);
+    if (prev && lineStore.resolution !== prev) {
+      setLineStore({ curvePoints: getCurvePoints(lineStore.resolution) });
+    }
+    return lineStore.resolution;
+  }, lineStore.resolution);
 
   const [hasSelection, setHasSelection] = createSignal(false);
   const [isDraggging, setDragging] = createSignal(false);
@@ -36,7 +40,7 @@ const DrawCurve = () => {
 
       if (updateCount >= 10000) updateCount = 0;
       if (updateCount % 2) {
-        setLineStore({ curvePoints: getCurvePoints() });
+        setLineStore({ curvePoints: getCurvePoints(lineStore.resolution) });
       }
     }
   }
@@ -50,11 +54,9 @@ const DrawCurve = () => {
     }
   }
 
-  const [lineStore, setLineStore] = createStore({ curvePoints: getCurvePoints() });
-
   return (
     <>
-      <Slider resolution={resolution} setResolution={setResolution}></Slider>
+      <Slider lineStore={lineStore} setLineStore={setLineStore}></Slider>
       <div class={styles.dragContainer}>
         <svg
           on:mousemove={onMouseMove}
