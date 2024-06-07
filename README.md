@@ -1,5 +1,4 @@
-[You can view it in sandbox here](https://codesandbox.io/p/devbox/github/kira0x1/bezier-curve/tree/main/)
-
+[![Edit kira0x1/bezier-curve/main](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/github/kira0x1/bezier-curve/main?embed=1&file=%2Fsrc%2FApp.jsx)
 ## Usage
 
 install dependencies
