@@ -21,28 +21,29 @@ const DrawCurve = () => {
   const [isDraggging, setDragging] = createSignal(false);
   const [selectedId, setSelectedId] = createSignal();
 
+  let updateCount = 0;
+
   function onMouseMove(e) {
-    // console.log(e);
+    updateCount++;
     if (hasSelection()) {
       cpoints[selectedId()].move(e.movementX, e.movementY);
-      curvePoints = getCurvePoints();
+
+      if (updateCount >= 10000) updateCount = 0;
+      if (updateCount % 2) {
+        setLineStore({ curvePoints: getCurvePoints() });
+      }
     }
   }
 
   function onClick(e) {
     if (hasSelection()) {
+      updateCount = 0;
       setHasSelection(false);
       setDragging(false);
     }
   }
 
   const [lineStore, setLineStore] = createStore({ curvePoints: curvePoints });
-
-  let conlog = 0;
-
-  createEffect(() => {
-    setLineStore({ curvePoints: getCurvePoints() });
-  });
 
   return (
     <>
