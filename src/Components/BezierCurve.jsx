@@ -1,27 +1,63 @@
-import { createSelector, createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
+import { createStore } from "solid-js/store";
 import styles from "../styles/curve.module.css";
 import ControlPoint from "./ControlPoint";
 import utils from "./utils";
 
 const DrawCurve = () => {
   const startPoint = { x: 30, y: 100 };
-  const controlPoint1 = new ControlPoint(90, 80, "1");
-  const controlPoint2 = new ControlPoint(150, 190, "2");
+  const controlPoint1 = new ControlPoint(0, 90, 80, "1");
+  const controlPoint2 = new ControlPoint(1, 150, 190, "2");
   const endPoint = { x: 220, y: 200 };
   const numPoints = 10;
 
-  const curvePoints = utils.bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, numPoints);
+  const getCurvePoints = () => utils.bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, numPoints);
 
+  let curvePoints = getCurvePoints();
+
+  const cpoints = [controlPoint1, controlPoint2];
+
+  const [hasSelection, setHasSelection] = createSignal(false);
+  const [isDraggging, setDragging] = createSignal(false);
   const [selectedId, setSelectedId] = createSignal();
-  const isSelected = createSelector(selectedId);
+
+  function onMouseMove(e) {
+    // console.log(e);
+    if (hasSelection()) {
+      cpoints[selectedId()].move(e.movementX, e.movementY);
+      curvePoints = getCurvePoints();
+    }
+  }
+
+  function onClick(e) {
+    if (hasSelection()) {
+      setHasSelection(false);
+      setDragging(false);
+    }
+  }
+
+  const [lineStore, setLineStore] = createStore({ curvePoints: curvePoints });
+
+  let conlog = 0;
+
+  createEffect(() => {
+    setLineStore({ curvePoints: getCurvePoints() });
+  });
 
   return (
     <>
-      <div class={styles.pointContainer}>
-        <svg class={styles.curveViewBox} viewBox="30 0 200 300" width="90%" height="90%">
-          {controlPoint1.render(isSelected, () => onControlPointClicked(controlPoint1.id))}
-          {controlPoint2.render(isSelected, () => onControlPointClicked(controlPoint2.id))}
-          {RenderCurve(curvePoints)}
+      <div class={styles.dragContainer}>
+        <svg
+          on:mousemove={onMouseMove}
+          on:mousedown={onClick}
+          class={styles.curveViewBox}
+          viewBox="30 0 200 300"
+          width="90%"
+          height="90%"
+        >
+          {controlPoint1.render(isDraggging, () => onControlPointClicked(0))}
+          {controlPoint2.render(isDraggging, () => onControlPointClicked(1))}
+          {RenderCurve(lineStore.curvePoints)}
         </svg>
       </div>
     </>
@@ -29,7 +65,8 @@ const DrawCurve = () => {
 
   function onControlPointClicked(id) {
     setSelectedId(id);
-    console.log(id);
+    setDragging(true);
+    setHasSelection(true);
   }
 };
 
