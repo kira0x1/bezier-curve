@@ -4,15 +4,24 @@ import styles from "../styles/curve.module.css";
 import ControlPoint from "./ControlPoint";
 import utils from "./Utils";
 import Slider from "./Slider";
+import Button from "./Button";
 
 // gimicky optimization
 let updateCount = 0;
 
+const defaultSettings = {
+  startPoint: { x: 30, y: 100 },
+  controlPoint1: { x: 90, y: 80 },
+  controlPoint2: { x: 150, y: 190 },
+  endPoint: { x: 220, y: 200 },
+  resolution: 10,
+};
+
 const DrawCurve = () => {
-  const startPoint = { x: 30, y: 100 };
+  let startPoint = { x: 30, y: 100 };
   const controlPoint1 = new ControlPoint(0, 90, 80, "1");
   const controlPoint2 = new ControlPoint(1, 150, 190, "2");
-  const endPoint = { x: 220, y: 200 };
+  let endPoint = { x: 220, y: 200 };
 
   const getCurvePoints = (res) => utils.bezierCurve(startPoint, controlPoint1, controlPoint2, endPoint, res);
 
@@ -54,10 +63,17 @@ const DrawCurve = () => {
     }
   }
 
+  function resetCurve() {
+    setLineStore({ resolution: defaultSettings.resolution });
+    controlPoint1.setPosition(defaultSettings.controlPoint1);
+    controlPoint2.setPosition(defaultSettings.controlPoint2);
+    setLineStore({ curvePoints: getCurvePoints(lineStore.resolution) });
+  }
+
   return (
     <>
       <Slider lineStore={lineStore} setLineStore={setLineStore}></Slider>
-      <div class={styles.dragContainer}>
+      <div class={styles.curveContainer}>
         <svg
           on:mousemove={onMouseMove}
           on:mousedown={onClick}
@@ -71,6 +87,7 @@ const DrawCurve = () => {
           {utils.renderCurve(lineStore.curvePoints)}
         </svg>
       </div>
+      <Button text="RESET" onclick={resetCurve} />
     </>
   );
 

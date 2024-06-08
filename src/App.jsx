@@ -5,9 +5,7 @@ function App() {
   return (
     <div class={styles.App}>
       <header class={styles.header}>CURVE</header>
-      <content class={styles.content}>
-        <DrawCurve />
-      </content>
+      <DrawCurve />
     </div>
   );
 }
