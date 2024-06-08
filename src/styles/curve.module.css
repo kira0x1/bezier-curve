@@ -3,10 +3,10 @@
   display: flex;
   margin: auto;
   background-color: #1b1e24;
-  width: 90vw;
-  max-width: 500px;
-  max-height: 500px;
-  height: 70vh;
+
+  /* max-width: 500px; */
+  /* max-height: 500px; */
+  /* height: 70vh; */
 }
 
 .controlPoint {
@@ -14,16 +14,33 @@
   stroke-width: 2.5;
   /* opacity: 0.8; */
   fill: rgb(56, 56, 56);
+  stroke-width: 3px;
+  width: 10px;
+  height: 10px;
   -webkit-user-drag: element;
+  display: inline-block;
+}
+
+.controlText {
+  font-size: 19px;
+  font-family: "poppins";
+  font-style: italic;
+  font-weight: 650;
+  text-anchor: middle;
+  width: 5px;
+}
+
+.controlText#label {
+  /* font-size: 100px; */
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  text-anchor: middle;
+  fill: hsl(219, 82%, 67%);
 }
 
 .controlPoint:hover {
   fill: rgb(108, 136, 190);
-}
-
-.curveContainer {
-  width: 100%;
-  height: 100%;
 }
 
 .slider {

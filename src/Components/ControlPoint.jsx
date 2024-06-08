@@ -3,12 +3,14 @@ import styles from "../styles/curve.module.css";
 
 export default class ControlPoint {
   static count = 0;
+  viewBox;
   id = 0;
 
   position;
   setPosition;
 
-  constructor(id, x, y, title = "") {
+  constructor(id, x, y, viewBox, title = "") {
+    this.viewBox = viewBox;
     [this.position, this.setPosition] = createSignal({ x: x, y: y });
     this.title = title;
     this.hovering = false;
@@ -19,19 +21,46 @@ export default class ControlPoint {
   }
 
   moveTo(x = 0, y = 0) {
-    this.setPosition({ x: x, y: y });
+    const finalPosition = this.keepInBounds(x, y);
+    this.setPosition(finalPosition);
   }
 
   translate(x = 0, y = 0) {
+    let finalX = this.position().x + x / 1.35;
+    let finalY = this.position().y + y / 1.35;
+
     if (x == 0 && y == 0) {
-      console.log("not gonna move cus zero zero");
       return;
     }
 
-    const xd = this.position().x + x / 1.35;
-    const yd = this.position().y + y / 1.35;
+    this.setPosition({ x: finalX, y: finalY });
+  }
 
-    this.setPosition({ x: xd, y: yd });
+  keepInBounds(wishX, wishY) {
+    let finalX = wishX;
+    let finalY = wishY;
+
+    const offsetX = 0;
+    const offsetY = 15;
+
+    // check bounds
+    if (wishX < -10) {
+      // finalX = this.viewBox.x + offsetX;
+    }
+
+    if (wishX > this.viewBox.width - offsetX) {
+      finalX = this.viewBox.width - offsetX;
+    }
+
+    if (wishY > this.viewBox.height - offsetY) {
+      finalY = this.viewBox.height - offsetY;
+    }
+
+    if (wishY < this.viewBox.y + offsetX) {
+      finalY = this.viewBox.y + offsetX;
+    }
+
+    return { x: finalX, y: finalY };
   }
 
   clamp(min, max) {
@@ -44,8 +73,6 @@ export default class ControlPoint {
         <rect
           onmousedown={onclicked}
           class={styles.controlPoint}
-          width="8"
-          height="8"
           x={this.position().x}
           y={this.position().y}
           style={isDragging() ? { "pointer-events": "none" } : { "pointer-events": "all" }}
@@ -53,15 +80,28 @@ export default class ControlPoint {
           ry="10"
         />
 
-        {/* <text
-          x={this.position().x - 12}
-          y={this.position().y - 5}
-          font-size="10px"
-          font-weight="500"
+        <text x={this.position().x - 50} y={this.position().y - 15} class={styles.controlText} id={styles.label}>
+          X
+        </text>
+        <text
+          x={this.position().x - 22}
+          y={this.position().y - 14}
           style={{ "user-select": "none" }}
+          class={styles.controlText}
         >
-          {this.id}
-        </text> */}
+          {this.position().x.toFixed("F1")}
+        </text>
+        <text x={this.position().x + 22} y={this.position().y - 15} class={styles.controlText} id={styles.label}>
+          Y
+        </text>
+        <text
+          x={this.position().x + 52}
+          y={this.position().y - 14}
+          style={{ "user-select": "none" }}
+          class={styles.controlText}
+        >
+          {this.position().y.toFixed("F1")}
+        </text>
       </svg>
     );
   }

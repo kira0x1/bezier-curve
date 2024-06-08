@@ -30,8 +30,8 @@ const renderCurve = (curvePoints) => {
 
     lines.push(
       <>
-        <line x1={point1.x} y1={point1.y} x2={point2.x} y2={point2.y} stroke="#Cf509F" stroke-width="2px" />
-        {i > 0 && <circle key={i} cx={point1.x} cy={point1.y} r="2" fill="white" />}
+        <line x1={point1.x} y1={point1.y} x2={point2.x} y2={point2.y} stroke="#Cf509F" stroke-width="4px" />
+        {i > 0 && <circle key={i} cx={point1.x} cy={point1.y} r="3" fill="white" />}
       </>,
     );
   }
